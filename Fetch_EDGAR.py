@@ -45,9 +45,9 @@ print_dotenv = False
 if print_dotenv == True:
     # Use them in your code
     if ticker:
-        print(f"API KEY loaded: {ticker}")
+        print(f"TICKER loaded: {ticker}")
     else:
-        print("API KEY not found in .env!")
+        print("TICKER not found in .env!")
 
     if email:
         print(f"EMAIL URL loaded: {email}")

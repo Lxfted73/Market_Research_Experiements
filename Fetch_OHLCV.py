@@ -28,16 +28,19 @@ import requests
 import os
 import json
 from datetime import datetime, timedelta
-
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+print_dotenv = True
+symbol = os.getenv("TICKER")
+symbol_list = [symbol]
 # API key should be set before running the script
-symbol = 'PLTR'
 interval = '5min'
 function = 'TIME_SERIES_INTRADAY'
 adjusted = 'false'
 extended_hours = 'true'
 year = 2023
 outputsize = 'full'
-api_key = '###'
 
 def generate_url(function, symbol, interval, month, outputsize, apikey):
     """Generate the URL for the Alpha Vantage API request."""

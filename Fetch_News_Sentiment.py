@@ -16,8 +16,20 @@ The script iterates through a predefined list of topics to collect and store com
 import requests
 import json
 import os
+from dotenv import load_dotenv
 
-api_key = '####'
+load_dotenv()
+api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+print_dotenv = True
+ticker = os.getenv("TICKER")
+
+
+if print_dotenv == True:
+    # Use them in your code
+    if ticker:
+        print(f" loaded: {ticker}")
+    else:
+        print("API KEY not found in .env!")
 
 def generate_articles_url(function, ticker, time_from, time_to, topics, limit, api_key):
     # Base URL for the API
@@ -72,9 +84,11 @@ def request_url(url_input, file_name):
         print(f"Json File saved as:{file_name}")
 
 
+
+
 # Example usage:
 # Assuming api_key is defined before this point
-ticker = 'TSM'  # CRYPTO:BTC,CRYPTO:SOL,CRYPTO: ETH'
+ticker = 'PLTR'  # CRYPTO:BTC,CRYPTO:SOL,CRYPTO: ETH'
 time_from = '20240101T0000'  # YYYYMMDDTHHMM 20240110T0130
 time_to = '20250130T0000'
 function = 'NEWS_SENTIMENT'

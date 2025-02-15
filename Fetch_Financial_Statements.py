@@ -35,24 +35,22 @@ function_earnings = 'EARNINGS'
 function_list = [function_income_statement, function_balance_sheet,function_cash_flow, function_earnings]
 
 load_dotenv()
-email = os.getenv('EMAIL')
-symbol = os.getenv('TICKER')
+api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
 print_dotenv = True
+symbol = os.getenv("TICKER")
+symbol_list = [symbol]
 
 if print_dotenv == True:
     # Use them in your code
-    if symbol:
-        print(f"API KEY loaded: {symbol}")
+    if api_key:
+        print(f"API KEY loaded: {api_key}")
     else:
         print("API KEY not found in .env!")
-
-    if email:
-        print(f"EMAIL URL loaded: {email}")
+    if symbol:
+        print(f'TICKER/SYMBOL loaded: {symbol}')
     else:
-        print("EMAIL URL not found in .env!")
+        print("TICKER/SYMBOL not found in .env!")
 
-symbol_list = [symbol]
-apikey = '####'
 
 def generate_statement_url(function, symbol, api_key):
     # Base URL for the API
@@ -101,7 +99,7 @@ for symbol in symbol_list:
     for statement in function_list:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
-        url = generate_statement_url(statement, symbol,apikey)
+        url = generate_statement_url(statement, symbol,api_key)
         print(url)
         file_name = generate_filename(symbol, statement)
         destination_file_path = os.path.join(folder_name, file_name)
