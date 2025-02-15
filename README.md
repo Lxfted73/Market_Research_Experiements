@@ -49,3 +49,12 @@ Uses Plotly for interactive and dynamic visualizations:
 Leverages statistical methods to uncover relationships:
 - Between stock returns and financial statements.
 - Between news sentiment and stock price movements, including lag analysis to understand the impact timeline.
+
+
+#### Note:
+This repository works from a .env file of the following format:
+TICKER = 'XXXX'
+EMAIL = 'email@gmail.com'
+ALPHA_VANTAGE_API_KEY ='APIKEY'
+FRED_API_KEY = 'APIKEY'
+
