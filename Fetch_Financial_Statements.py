@@ -26,13 +26,30 @@ The script uses a predefined API key and focuses on one symbol ('PLTR') but can 
 import json
 import os
 import requests
+from dotenv import load_dotenv
 
 function_income_statement = 'INCOME_STATEMENT'
 function_balance_sheet = 'BALANCE_SHEET'
 function_cash_flow = 'CASH_FLOW'
 function_earnings = 'EARNINGS'
 function_list = [function_income_statement, function_balance_sheet,function_cash_flow, function_earnings]
-symbol = 'PLTR'
+
+load_dotenv()
+email = os.getenv('EMAIL')
+symbol = os.getenv('TICKER')
+print_dotenv = True
+
+if print_dotenv == True:
+    # Use them in your code
+    if symbol:
+        print(f"API KEY loaded: {symbol}")
+    else:
+        print("API KEY not found in .env!")
+
+    if email:
+        print(f"EMAIL URL loaded: {email}")
+    else:
+        print("EMAIL URL not found in .env!")
 
 symbol_list = [symbol]
 apikey = '####'
