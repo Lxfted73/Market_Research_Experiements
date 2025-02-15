@@ -53,8 +53,8 @@ Leverages statistical methods to uncover relationships:
 
 #### Note:
 This repository works from a .env file of the following format:
-TICKER = 'XXXX'
-EMAIL = 'email@gmail.com'
-ALPHA_VANTAGE_API_KEY ='APIKEY'
-FRED_API_KEY = 'APIKEY'
+- TICKER = 'XXXX'
+- EMAIL = 'email@gmail.com'
+- ALPHA_VANTAGE_API_KEY ='APIKEY'
+- FRED_API_KEY = 'APIKEY'
 
