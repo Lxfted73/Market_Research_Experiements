@@ -32,11 +32,27 @@ import json
 import requests
 import time
 import os
+from dotenv import load_dotenv
 
-email = "###@gmail.com"
-ticker = "PLTR"
 form = "10-K"
 
+load_dotenv()
+email = os.getenv('EMAIL')
+ticker = os.getenv('TICKER')
+
+print_dotenv = False
+
+if print_dotenv == True:
+    # Use them in your code
+    if ticker:
+        print(f"API KEY loaded: {ticker}")
+    else:
+        print("API KEY not found in .env!")
+
+    if email:
+        print(f"EMAIL URL loaded: {email}")
+    else:
+        print("EMAIL URL not found in .env!")
 
 pd.set_option("display.max_columns",  None)
 pd.set_option("display.max_rows",  None)
@@ -88,12 +104,11 @@ def load_company_data():
     return pd.DataFrame(CIK_dict["data"], columns=CIK_dict["fields"])
 
 
-def fetch_filings(CIK, ticker, form):
+def fetch_filings(CIK, form):
     """
     Fetches company filings from SEC API.
 
     :param CIK: Company's CIK number
-    :param ticker: Company ticker symbol
     :param form: Form type to look for (e.g., '10-K')
     :return: DataFrame with relevant filings
     """
@@ -108,13 +123,11 @@ def fetch_filings(CIK, ticker, form):
         return form_filings
     return pd.DataFrame()  # Return an empty DataFrame if no data was fetched
 
-def fetch_XBRL(CIK, ticker):
+def fetch_XBRL(CIK):
     """
     Fetches company filings from SEC API.
 
     :param CIK: Company's CIK number
-    :param ticker: Company ticker symbol
-    :param form: Form type to look for (e.g., '10-K')
     :return: DataFrame with relevant filings
     """
     url = f"https://data.sec.gov/submissions/CIK{str(CIK).zfill(10)}.json"
@@ -155,18 +168,17 @@ def process_filing(ticker, CIK, row):
             f.write(response.text)
 
 
-def main(ticker, form, requests_per_second=1.0):
+def main(ticker, requests_per_second=1.0):
     """
     Main function to orchestrate the fetching and processing of SEC filings.
 
     :param ticker: Company ticker symbol
-    :param form: Form type to look for (e.g., '10-K')
     :param requests_per_second: Rate limit in requests per second
     """
     CIK_df = load_company_data()
     CIK = CIK_df[CIK_df["ticker"] == ticker].cik.values[0]
 
-    form_filings = fetch_XBRL(CIK, ticker)
+    form_filings = fetch_XBRL(CIK)
     print(form_filings.head(100))
 
     for _, row in form_filings.head(20).iterrows():
@@ -174,4 +186,4 @@ def main(ticker, form, requests_per_second=1.0):
 
 
 if __name__ == "__main__":
-    main(ticker, form)
+    main(ticker)

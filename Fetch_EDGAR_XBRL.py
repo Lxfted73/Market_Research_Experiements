@@ -29,14 +29,33 @@ import json
 import requests
 import time
 import os
+from dotenv import load_dotenv
+
+print_dotenv = False
+
+
+load_dotenv()
+email = os.getenv('EMAIL')
+ticker = os.getenv('TICKER')
+
+if print_dotenv == True:
+    # Use them in your code
+    if ticker:
+        print(f"API KEY loaded: {ticker}")
+    else:
+        print("API KEY not found in .env!")
+
+    if email:
+        print(f"EMAIL URL loaded: {email}")
+    else:
+        print("EMAIL URL not found in .env!")
 
 pd.set_option('display.max_columns', None)  # None means show all columns
 # Number of requests per second you want to allow
 requests_per_second = 1.0
-ticker = "PLTR"
 print_namespace = True
 # Custom User-Agent header for requests
-headers = {"User-Agent": "###@gmail.com"}
+headers = {"User-Agent": email}
 
 def make_api_request(url, header):
     try:
